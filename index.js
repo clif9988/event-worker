@@ -37,7 +37,7 @@
       this.worker.onmessage = this[_onIncomingMessage]()
     }
 
-    emit (eventName, payload) {
+    request (eventName, payload) {
       return new Promise((resolve, reject) => {
         const eventId = _newEventId(eventName)
 
@@ -49,6 +49,10 @@
 
         this[_createResponseBundle](eventId, eventName)(payload)
       })
+    }
+    
+    emit(eventName, payload) {
+      this[_createResponseBundle](undefined, eventName)(payload)
     }
 
     on (id, callback) {
